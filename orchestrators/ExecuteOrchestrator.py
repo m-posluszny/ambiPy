@@ -1,4 +1,5 @@
 from colorLibs.ColorParser import ColorParser
+from common.utils import get_fps
 from smartLight import LightController
 import threading
 import queue
@@ -14,15 +15,17 @@ class ExecuteOrchestrator(threading.Thread):
         self.controller = c
         self.compression = compression
 
+    @get_fps
     def procedure(self):
         image = self.q.get()
         image = self.color.resize_image(image, self.compression)
         rgb = self.color.get_rgb_mean(image)
         bright = self.color.get_brightness(rgb)
-        temp = self.color.get_temperature(rgb)
+        # temp = self.color.get_temperature(rgb)
         self.controller.set_brightness(bright)
-        self.controller.set_temperature(temp)
+        # self.controller.set_temperature(temp)
 
     def run(self):
+        self.controller.configure()
         while True:
             self.procedure()

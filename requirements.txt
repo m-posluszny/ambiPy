@@ -3,3 +3,5 @@ screeninfo
 mss
 colour
 numpy
+pywizlight
+pyyaml

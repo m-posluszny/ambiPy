@@ -10,7 +10,7 @@ class WizNormalizer(Normalizer):
         pass
 
     def normalize_brightness(self, bright):
-        return bright
+        return int(bright)
 
     def normalize_temperature(self, temp):
-        return temp
+        return 3000

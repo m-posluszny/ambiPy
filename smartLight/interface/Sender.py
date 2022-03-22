@@ -1,5 +1,5 @@
 class Sender:
-    def __init__(self) -> None:
+    def configure(self):
         pass
 
     def send_brightness(self, bright: float):

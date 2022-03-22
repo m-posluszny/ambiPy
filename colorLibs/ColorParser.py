@@ -12,7 +12,7 @@ class ColorParser:
 
     def get_rgb_mean(self, image):
         stat = ImageStat.Stat(image)
-        r, g, b = stat.mean
+        r, g, b = stat.rms
         return [r, g, b]
 
     def get_brightness(self, rgb):

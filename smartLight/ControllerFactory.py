@@ -5,5 +5,5 @@ from .LightController import LightController
 
 class ControllerFactory:
     @staticmethod
-    def get_wiz_controller():
-        return LightController(WizNormalizer(), WizSender())
+    def get_wiz_controller(ips=[], discovery=False):
+        return LightController(WizNormalizer(), WizSender(ips, discovery))

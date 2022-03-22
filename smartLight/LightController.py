@@ -7,6 +7,9 @@ class LightController:
         self.normalizer = normalizer
         self.sender = sender
 
+    def configure(self):
+        self.sender.configure()
+
     def set_brightness(self, bright):
         normalized = self.normalizer.normalize_brightness(bright)
         self.sender.send_brightness(normalized)
