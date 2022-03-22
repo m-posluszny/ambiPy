@@ -7,12 +7,12 @@ from smartLight.ControllerFactory import ControllerFactory
 
 def main():
     print("Creating Queue")
-    runtime_queue = queue.Queue()
+    runtime_queue = queue.Queue(10)
     controller = ControllerFactory.get_wiz_controller()
     capture = CapturerFactory.get_win_capturer()
 
     capturer = CaptureOrchestrator(runtime_queue, capture)
-    executor = ExecuteOrchestrator(runtime_queue, controller)
+    executor = ExecuteOrchestrator(runtime_queue, controller, 50)
 
     print("Starting Image Capturer")
     capturer.start()

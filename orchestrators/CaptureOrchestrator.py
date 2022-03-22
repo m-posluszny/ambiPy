@@ -1,5 +1,6 @@
 import threading
 import queue
+from common.utils import get_fps
 from capture.interface import ImageCapturer
 
 
@@ -11,7 +12,10 @@ class CaptureOrchestrator(threading.Thread):
         self.q = q
         self.capturer = c
 
+    def procedure(self):
+        image = self.capturer.captureImage()
+        self.q.put(image)
+
     def run(self):
         while True:
-            image = self.capturer.captureImage()
-            self.q.put(image)
+            self.procedure()
