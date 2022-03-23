@@ -21,7 +21,7 @@ class LightController:
 
     def apply(self):
         self.sender.send(self.config)
-        self.clear
+        self.clear()
 
     def clear(self):
         self.config = {}

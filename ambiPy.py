@@ -15,12 +15,14 @@ def parseArgs():
 def main(cfg):
     light = cfg.get("light", {})
     print("Creating Queue")
-    colorQueue = CappedQueue(maxsize=light.get("queue_size", 100))
+    colorQueue = CappedQueue(maxsize=cfg.get("queue_size", 100))
 
     if light.get("type") == "wiz":
         print("Connecting to Wiz")
         controller = ControllerFactory.get_wiz_controller(
-            light.get("lights", []), light.get("discovery", False)
+            light.get("lights", []),
+            light.get("discovery", False),
+            light.get("bright_scale", (0, 255)),
         )
     else:
         print("This app do not support other controllers")
