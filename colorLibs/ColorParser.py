@@ -1,4 +1,6 @@
 from PIL import Image, ImageStat
+import numpy as np
+import colour
 import math
 
 
@@ -19,8 +21,8 @@ class ColorParser:
         return math.sqrt(0.241 * (rgb[0] ** 2) + 0.691 * (rgb[1] ** 2) + 0.068 * (rgb[2] ** 2))
 
     def get_temperature(self, rgb):
-        n = ((0.23881) * rgb[0] + (0.25499) * rgb[1] + (-0.58291) * rgb[2]) / (
-            (0.11109) * rgb[0] + (-0.85406) * rgb[1] + (0.52289) * rgb[2]
-        )
-        cct = 449 * math.pow(n, 3) + 3525 * math.pow(n, 2) + 6823.3 * n + 5520.33
-        return cct
+        rgb = np.array(rgb)
+        XYZ = colour.sRGB_to_XYZ(rgb / 255)
+        xy = colour.XYZ_to_xy(XYZ)
+        CCT = colour.xy_to_CCT(xy, "hernandez1999")
+        return CCT

@@ -1,8 +1,8 @@
 from capture.CapturerFactory import CapturerFactory
 from common.utils import yaml_load
-from orchestrators import ExecuteOrchestrator, CaptureOrchestrator
+from orchestrators import SenderOrchestrator, ImageOrchestrator
 from smartLight.ControllerFactory import ControllerFactory
-import queue
+from structures import CappedQueue
 import argparse
 
 
@@ -14,9 +14,9 @@ def parseArgs():
 
 def main(cfg):
     light = cfg.get("light", {})
-
     print("Creating Queue")
-    runtime_queue = queue.LifoQueue(light.get("queue_size", 10))
+    colorQueue = CappedQueue(maxsize=light.get("queue_size", 100))
+
     if light.get("type") == "wiz":
         print("Connecting to Wiz")
         controller = ControllerFactory.get_wiz_controller(
@@ -27,13 +27,13 @@ def main(cfg):
         return
 
     capture = CapturerFactory.get_win_capturer()
-    capturer = CaptureOrchestrator(runtime_queue, capture)
-    executor = ExecuteOrchestrator(runtime_queue, controller, cfg.get("image_compression", 50))
+    imager = ImageOrchestrator(colorQueue, capture, cfg.get("image_compression", 50))
+    sender = SenderOrchestrator(colorQueue, controller)
 
-    print("Starting Image Capturer")
-    capturer.start()
-    print("Starting Executor")
-    executor.start()
+    print("Starting Image Capturer & Parser")
+    imager.start()
+    print("Starting Sender")
+    sender.start()
     while True:
         pass
 

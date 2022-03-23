@@ -1,6 +1,18 @@
 import asyncio
 import time
 import yaml
+from PIL import Image
+
+
+def get_time(method):
+    def timer(*args, **kw):
+        ts = time.time()
+        result = method(*args, **kw)
+        te = time.time()
+        print(f"{(te-ts)} s - {method.__name__}")
+        return result
+
+    return timer
 
 
 def get_fps(method):
@@ -8,7 +20,7 @@ def get_fps(method):
         ts = time.time()
         result = method(*args, **kw)
         te = time.time()
-        print(f"{1/(te-ts) if ((te-ts) > 0) else 999} FPS - {method.__name__}")
+        print(f"{1/(te-ts) if ((te-ts) > 0) else 999:.2f} FPS - {method.__name__}")
         return result
 
     return fps
