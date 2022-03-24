@@ -14,6 +14,7 @@ def parseArgs():
 
 def main(cfg):
     light = cfg.get("light", {})
+    screen = cfg.get("screen", {})
     print("Creating Queue")
     colorQueue = CappedQueue(maxsize=cfg.get("queue_size", 100))
 
@@ -28,8 +29,8 @@ def main(cfg):
         print("This app do not support other controllers")
         return
 
-    capture = CapturerFactory.get_win_capturer()
-    imager = ImageOrchestrator(colorQueue, capture, cfg.get("image_compression", 50))
+    capture = CapturerFactory.get_win_capturer(screen.get("scale", 1))
+    imager = ImageOrchestrator(colorQueue, capture)
     sender = SenderOrchestrator(colorQueue, controller)
 
     print("Starting Image Capturer & Parser")

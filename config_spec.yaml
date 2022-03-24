@@ -2,8 +2,14 @@ light:
   type: wiz
   discovery: false
   lights:
-    - 192.168.1.1
-    - 192.168.1.2
+    - 192.168.1.28
+    - 192.168.1.29
+  bright_scale:
+    - 30 #min
+    - 125 #max
 
-image_compression: 50
+screen:
+  scale:
+    - 0.9 #x
+    - 0.9 #y
 queue_size: 10
