@@ -5,3 +5,4 @@ colour-science
 numpy
 pywizlight
 pyyaml
+d3dshot

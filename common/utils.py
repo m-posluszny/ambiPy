@@ -20,6 +20,7 @@ def get_fps(method):
         ts = time.time()
         result = method(*args, **kw)
         te = time.time()
+        print("")
         print(f"{1/(te-ts) if ((te-ts) > 0) else 999:.2f} FPS - {method.__name__}")
         return result
 

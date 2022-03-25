@@ -15,7 +15,7 @@ class SenderOrchestrator(threading.Thread):
         self.controller = c
 
     def send_procedure(self):
-        colors = self.colorQueue.get()
+        colors = self.colorQueue.get(block=False)
         self.controller.set_brightness(colors.get("brightness", 125))
         try:
             self.controller.set_temperature(colors.get("colortemp", 2000))

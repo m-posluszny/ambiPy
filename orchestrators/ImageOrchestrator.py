@@ -1,4 +1,5 @@
 import threading
+from common.utils import get_fps
 from structures.CappedQueue import CappedQueue
 from colorLibs.ColorParser import ColorParser
 from capture.interface import ImageCapturer
@@ -21,5 +22,6 @@ class ImageOrchestrator(threading.Thread):
         self.colorQueue.put({"brightness": bright, "colortemp": temp})
 
     def run(self):
+        self.capturer.configure()
         while True:
             self.procedure()

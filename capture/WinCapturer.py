@@ -23,6 +23,7 @@ class WinCapturer(ImageCapturer):
                     "height": scaled(m.height, 1),
                 }
 
+    @get_fps
     def captureImage(self) -> Image:
         img_mss = self.capturer.grab(self.monitor)
         img = Image.frombytes("RGB", img_mss.size, img_mss.bgra, "raw", "BGRX")
